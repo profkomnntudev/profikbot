@@ -268,9 +268,6 @@ bot.command(phrase.admin.start, async (ctx)=>{
 bot.on(async (ctx)=>{
   let msgtxt = ctx.message.text;
   let att = ctx.message.attachments;
-  console.log(ctx.message)
-  console.log(att);
-  let text = phrase.idk[RandInt(0, phrase.idk.length-1)]
   if (att != undefined){
     let story = false
     for(let i = 0; i < att.length; i++){
@@ -286,13 +283,14 @@ bot.on(async (ctx)=>{
   if (partner){
     text = 'Здравствуйте! Я передам ваше предложение!'
   }
-  if (!db.getAction(ctx.message.from_id)){
+  if (att || partner){
     await ctx.reply(text, null, Markup
   .keyboard(mainMarkup)
   .oneTime(true)).then(
     partner && bot.sendMessage(db.getLeader('iao').id, 'vk.com/id'+ctx.message.from_id+' Чекни сообщения группы, тут сотрудничество предлагают')
   );
-}});
+  }
+});
   
 
 bot.startPolling((err) => {
