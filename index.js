@@ -176,7 +176,7 @@ bot.command(phrase.money.wait, async (ctx) => {
 
 bot.command(phrase.hellomk.matpom, async (ctx) => {
   db.setAction(ctx.message.from_id);
-  await ctx.reply(phrase.ans.matpom, null, Markup
+  await ctx.reply(phrase.ans.matpom, phrase.ans.matpom_wall, Markup
   .keyboard([
     [
       Markup.button(phrase.start.anotherq, 'positive'),
