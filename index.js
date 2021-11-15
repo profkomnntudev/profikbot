@@ -13,6 +13,7 @@ const admin = require("./scenes/admin")
 const anq = require("./scenes/anq")
 const step = require("./scenes/step")
 const activitys = require("./scenes/activity")
+const apiVK = require('node-vk-bot-api/lib/api')
 RandInt = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -263,6 +264,20 @@ bot.command(phrase.hellomk.obsh[0], async (ctx)=>{
 
 bot.command(phrase.admin.start, async (ctx)=>{
   await ctx.scene.enter('admin');
+})
+
+bot.command(phrase.code, async (ctx)=>{
+  const res = await apiVK('groups.isMember', 
+  {
+    access_token: db.getToken(),
+    group_id: 27489655,
+    user_id: ctx.message.from_id
+  });
+  if (res.response === 1){
+    ctx.reply("Щшхтьоя хэбво лыоя Ц10")
+  } else {
+    ctx.reply("Для доступа к этому заданию необходимо подписаться на группу профсоюзной организации студентов НГТУ")
+  }
 })
 
 bot.on(async (ctx)=>{
