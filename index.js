@@ -266,6 +266,10 @@ bot.command(phrase.admin.start, async (ctx)=>{
   await ctx.scene.enter('admin');
 })
 
+bot.command("#НовогодняяППОС", async (ctx) => {
+  await ctx.reply("Ваш ответ принят, ожидайте следующего задания")
+})
+
 bot.command(phrase.code, async (ctx)=>{
   const res = await apiVK('groups.isMember', 
   {
