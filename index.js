@@ -66,7 +66,6 @@ const mainMarkup = [
 
 bot.command(['Начать', 'Привет', 'Добрый день', phrase.start.to_start, phrase.start.anotherq, 'Start'], async (ctx) => {
   db.deleteAction(ctx.message.from_id);
-  console.log(ctx.message.text);
   let text = phrase.hello[RandInt(0, phrase.hello.length-1)];
   let img = 'photo620633475_457239019';
   if (ctx.message.text === phrase.start.to_start || ctx.message.text === phrase.start.anotherq){
@@ -266,24 +265,6 @@ bot.command(phrase.admin.start, async (ctx)=>{
   await ctx.scene.enter('admin');
 })
 
-bot.command("#НовогодняяППОС", async (ctx) => {
-  await ctx.reply("Ваш ответ принят, ожидайте следующего задания")
-})
-
-bot.command(phrase.code, async (ctx)=>{
-  const res = await apiVK('groups.isMember', 
-  {
-    access_token: db.getToken(),
-    group_id: 27489655,
-    user_id: ctx.message.from_id
-  });
-  if (res.response === 1){
-    ctx.reply("Щшхтьоя хэбво лыоя Ц10")
-  } else {
-    ctx.reply("Для доступа к этому заданию необходимо подписаться на группу профсоюзной организации студентов НГТУ")
-  }
-})
-
 bot.on(async (ctx)=>{
   let msgtxt = ctx.message.text;
   let att = ctx.message.attachments;
@@ -308,6 +289,17 @@ bot.on(async (ctx)=>{
   .oneTime(true)).then(
     partner && bot.sendMessage(db.getLeader('iao').id, 'vk.com/id'+ctx.message.from_id+' Чекни сообщения группы, тут сотрудничество предлагают')
   );
+  } else {
+    db.deleteAction(ctx.message.from_id);
+    let text = phrase.hello[RandInt(0, phrase.hello.length-1)];
+    let img = 'photo620633475_457239019';
+    if (ctx.message.text === phrase.start.to_start || ctx.message.text === phrase.start.anotherq){
+      text = 'Чем я еще могу тебе помочь?';
+      img = null;
+    }
+    await ctx.reply(text, img, Markup
+    .keyboard(mainMarkup)
+    .oneTime(true));
   }
 });
   
