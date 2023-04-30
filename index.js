@@ -38,6 +38,7 @@ bot.use(async (ctx, next) => {
 });
 
 const mainMarkup = [
+	[Markup.button("Проверить знания", "positive")],
 	[
 		Markup.button(phrase.hellomk.matpom, "primary"),
 		Markup.button(phrase.hellomk.obsh[0], "primary"),
@@ -52,7 +53,6 @@ const mainMarkup = [
 		Markup.button(phrase.hellomk.anq, "positive"),
 	],
 	[Markup.button(phrase.hellomk.partnership)],
-	[Markup.button("Проверить знания")],
 ];
 
 bot.command(["Начать", "Привет", "Добрый день", phrase.start.to_start, phrase.start.anotherq, "Start"], async ctx => {
