@@ -13,7 +13,6 @@ const admin = require("./scenes/admin");
 const anq = require("./scenes/anq");
 const step = require("./scenes/step");
 const activitys = require("./scenes/activity");
-const firstmaytest = require("./scenes/firstmaytest");
 RandInt = (min, max) => {
 	min = Math.ceil(min);
 	max = Math.floor(max);
@@ -38,7 +37,6 @@ bot.use(async (ctx, next) => {
 });
 
 const mainMarkup = [
-	[Markup.button("Проверить знания", "positive")],
 	[
 		Markup.button(phrase.hellomk.matpom, "primary"),
 		Markup.button(phrase.hellomk.obsh[0], "primary"),
@@ -198,15 +196,10 @@ bot.command(phrase.hellomk.exchangeintonntu, async ctx => {
 
 const session = new Session();
 
-const stage = new Stage(active, qai, partnership, hostel, admin, step, activitys, anq, firstmaytest);
+const stage = new Stage(active, qai, partnership, hostel, admin, step, activitys, anq);
 
 bot.use(session.middleware());
 bot.use(stage.middleware());
-
-bot.command(["Проверить знания", "Попробовать снова!"], async ctx => {
-	db.setAction(ctx.message.from_id);
-	await ctx.scene.enter("firstmaytest");
-});
 
 bot.command(phrase.hellomk.active, async ctx => {
 	db.setAction(ctx.message.from_id);
