@@ -206,11 +206,6 @@ bot.command(phrase.hellomk.active, async ctx => {
 	await ctx.scene.enter("active");
 });
 
-bot.command(phrase.hellomk.active, async ctx => {
-	db.setAction(ctx.message.from_id);
-	await ctx.scene.enter("active");
-});
-
 bot.command(phrase.hellomk.inst, async ctx => {
 	db.setAction(ctx.message.from_id);
 	await ctx.scene.enter("qai");
