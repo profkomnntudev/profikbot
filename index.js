@@ -19,10 +19,13 @@ RandInt = (min, max) => {
 	return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
 };
 
+let activitys = [];
+let inActionArr = {};
+
 const bot = new VkBot(db.getToken());
 
 const inAction = from_id => {
-	if (db.getAction(from_id)) {
+	if (inActionArr[from_id]) {
 		return true;
 	}
 	return false;
@@ -54,7 +57,7 @@ const mainMarkup = [
 ];
 
 bot.command(["Начать", "Привет", "Добрый день", phrase.start.to_start, phrase.start.anotherq, "Start"], async ctx => {
-	db.deleteAction(ctx.message.from_id);
+	delete inActionArr[ctx.message.from_id];
 	let text = phrase.hello[RandInt(0, phrase.hello.length - 1)];
 	let img = "photo620633475_457239019";
 	if (ctx.message.text === phrase.start.to_start || ctx.message.text === phrase.start.anotherq) {
@@ -65,7 +68,7 @@ bot.command(["Начать", "Привет", "Добрый день", phrase.sta
 });
 
 bot.command(phrase.hellomk.money, async ctx => {
-	db.setAction(ctx.message.from_id);
+	inActionArr[ctx.message.from_id] = true;
 	await ctx.reply(
 		phrase.ans.obsh,
 		null,
@@ -94,7 +97,7 @@ bot.command("пока", async ctx => {
 });
 
 bot.command(phrase.money.when, async ctx => {
-	db.setAction(ctx.message.from_id);
+	inActionArr[ctx.message.from_id] = true;
 	await ctx.reply(
 		phrase.moneyansw.when,
 		null,
@@ -103,7 +106,7 @@ bot.command(phrase.money.when, async ctx => {
 });
 
 bot.command(phrase.hellomk.uvol, async ctx => {
-	db.setAction(ctx.message.from_id);
+	inActionArr[ctx.message.from_id] = true;
 	await ctx.reply(
 		phrase.ans.uvol,
 		null,
@@ -112,7 +115,7 @@ bot.command(phrase.hellomk.uvol, async ctx => {
 });
 
 bot.command(phrase.money.wait, async ctx => {
-	db.setAction(ctx.message.from_id);
+	inActionArr[ctx.message.from_id] = true;
 	let ms = Date.now();
 	let date = new Date(ms);
 	let text = "";
@@ -129,7 +132,7 @@ bot.command(phrase.money.wait, async ctx => {
 });
 
 bot.command(phrase.money.how_much, async ctx => {
-	db.setAction(ctx.message.from_id);
+	inActionArr[ctx.message.from_id] = true;
 	leader = db.getLeader("kok");
 	await ctx
 		.reply(
@@ -150,7 +153,7 @@ bot.command(phrase.money.how_much, async ctx => {
 });
 
 bot.command(phrase.hellomk.matpom, async ctx => {
-	db.setAction(ctx.message.from_id);
+	inActionArr[ctx.message.from_id] = true;
 	await ctx.reply(
 		phrase.ans.matpom,
 		phrase.ans.matpom_wall,
@@ -159,7 +162,7 @@ bot.command(phrase.hellomk.matpom, async ctx => {
 });
 
 bot.command(phrase.hellomk.iwanttoprof, async ctx => {
-	db.setAction(ctx.message.from_id);
+	inActionArr[ctx.message.from_id] = true;
 	await ctx.reply(
 		phrase.ans.iwanttoprof,
 		null,
@@ -168,7 +171,7 @@ bot.command(phrase.hellomk.iwanttoprof, async ctx => {
 });
 
 bot.command(phrase.hellomk.tonntu, async ctx => {
-	db.setAction(ctx.message.from_id);
+	inActionArr[ctx.message.from_id] = true;
 	await ctx.reply(
 		phrase.ans.tonntu,
 		null,
@@ -177,7 +180,7 @@ bot.command(phrase.hellomk.tonntu, async ctx => {
 });
 
 bot.command(phrase.hellomk.exchangeonnntu, async ctx => {
-	db.setAction(ctx.message.from_id);
+	inActionArr[ctx.message.from_id] = true;
 	await ctx.reply(
 		phrase.ans.exchangeonnntu,
 		null,
@@ -186,7 +189,7 @@ bot.command(phrase.hellomk.exchangeonnntu, async ctx => {
 });
 
 bot.command(phrase.hellomk.exchangeintonntu, async ctx => {
-	db.setAction(ctx.message.from_id);
+	inActionArr[ctx.message.from_id] = true;
 	await ctx.reply(
 		phrase.ans.exchangeintonntu,
 		null,
@@ -202,27 +205,27 @@ bot.use(session.middleware());
 bot.use(stage.middleware());
 
 bot.command(phrase.hellomk.active, async ctx => {
-	db.setAction(ctx.message.from_id);
+	inActionArr[ctx.message.from_id] = true;
 	await ctx.scene.enter("active");
 });
 
 bot.command(phrase.hellomk.inst, async ctx => {
-	db.setAction(ctx.message.from_id);
+	inActionArr[ctx.message.from_id] = true;
 	await ctx.scene.enter("qai");
 });
 
 bot.command(phrase.hellomk.anq, async ctx => {
-	db.setAction(ctx.message.from_id);
+	inActionArr[ctx.message.from_id] = true;
 	await ctx.scene.enter("anq");
 });
 
 bot.command(phrase.hellomk.partnership, async ctx => {
-	db.setAction(ctx.message.from_id);
+	inActionArr[ctx.message.from_id] = true;
 	await ctx.scene.enter("partnership");
 });
 
 bot.command(phrase.hellomk.obsh[0], async ctx => {
-	db.setAction(ctx.message.from_id);
+	inActionArr[ctx.message.from_id] = true;
 	await ctx.scene.enter("hostel");
 });
 
@@ -267,7 +270,7 @@ bot.on(async ctx => {
 					)
 			);
 	} else {
-		db.deleteAction(ctx.message.from_id);
+		delete inActionArr[ctx.message.from_id];
 		let text = phrase.hello[RandInt(0, phrase.hello.length - 1)];
 		let img = "photo620633475_457239019";
 		if (ctx.message.text === phrase.start.to_start || ctx.message.text === phrase.start.anotherq) {
