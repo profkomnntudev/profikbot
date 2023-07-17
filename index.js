@@ -233,6 +233,7 @@ bot.command(phrase.admin.start, async ctx => {
 });
 
 bot.on(async ctx => {
+	let text;
 	let msgtxt = ctx.message.text;
 	let att = ctx.message.attachments;
 	if (att != undefined) {
@@ -270,7 +271,7 @@ bot.on(async ctx => {
 			);
 	} else {
 		delete inActionArr[ctx.message.from_id];
-		let text = phrase.hello[RandInt(0, phrase.hello.length - 1)];
+		text = phrase.hello[RandInt(0, phrase.hello.length - 1)];
 		let img = "photo620633475_457239019";
 		if (ctx.message.text === phrase.start.to_start || ctx.message.text === phrase.start.anotherq) {
 			text = "Чем я еще могу тебе помочь?";
