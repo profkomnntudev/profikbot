@@ -20,9 +20,11 @@ RandInt = (min, max) => {
 };
 
 let inActionArr = {};
-
+let startTime = Date.now();
 const bot = new VkBot(db.getToken());
-
+bot.on(async (ctx, next) => {
+	if (startTime + 60000 < Date.now()) next();
+});
 const inAction = from_id => {
 	if (inActionArr[from_id]) {
 		return true;
